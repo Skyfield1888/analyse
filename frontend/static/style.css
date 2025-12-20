@@ -10,23 +10,42 @@
 }
 
 :root {
-    --bg-color-normal: #f6f5f4;
-    --bg-color-highlighted: #c0bfbc;
+    --bg-color-5: white;
+    --bg-color-4: #f6f5f4;
+    --bg-color-3: #deddda;
+    --bg-color-2: #c0bfbc;
+    --bg-color-1: #9a9996;
+    --text-color: black;
+    --blue-1: #99C1F1;
+    --blue-2: #62A0EA;
+    --blue-3: #3584e4;
+    --blue-4: #1C71D8;
+    --blue-5: #1A5FB4;
 }
 @media(prefers-color-scheme: dark) {
     :root {
-        --bg-color-normal: #241f31;
-        --bg-color-highlighted: #3d3846;
+        --bg-color-1: #77767b;
+        --bg-color-2: #5e5c64;
+        --bg-color-3: #3d3846;
+        --bg-color-4: #241f31;
+        --bg-color-5: black;
+        --text-color: #f6f5f4;
     }
 }
 
 body {
     margin: 0;
     font-family: "Adwaita Sans";
+    background-color: var(--bg-color-4);
+}
+@media(prefers-color-scheme: dark) {
+    body {
+        color: var(--text-color);
+    }
 }
  
 .header {
-    background-color: pink;
+    background-color: var(--bg-color-3);
     margin: 0;
     padding: 8px;
     display: flex;
@@ -36,8 +55,8 @@ body {
 }
 
 .content {
+    padding: 8px;
     height: 100%;
-    background-color: blue;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -47,9 +66,65 @@ body {
     margin: 8px;
     border: 0;
     padding: 5px;
-    background-color: var(--bg-color-normal);
+    background-color: var(--bg-color-2);
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    color: inherit;
+    font-family: inherit;
+    font-size: medium;
 }
 
+
+
 .top-button:hover {
-    background-color: var(--bg-color-highlighted);
+    background-color: var(--bg-color-1);
+}
+
+.top-button:active {
+    background-color: var(--bg-color-3);
+}
+
+.toolbar {
+    background: var(--bg-color-3);
+    margin: 0px;
+    padding: 0;
+    border-radius: 5px;
+    height: 70px;
+}
+
+.toolbar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    margin: 5px;
+    border: 0;
+    padding: 0px;
+    background-color: var(--blue-3);
+    border-radius: 5px;
+    /* color: inherit;
+    font-family: inherit;
+    font-size: medium;*/
+} 
+
+.toolbar-button:hover {
+    background-color: var(--blue-2);
+}
+.toolbar-button:active {
+    background-color: var(--blue-5);
+}
+
+.new-value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background-color: var(--text-color);
+    mask-image: url("/static/img/tab-new-symbolic.svg");
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: 30px;
+    height: 30px;
 }
