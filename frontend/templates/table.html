@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Table</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 5px; }
+        input { width: 60px; }
+    </style>
+</head>
+<body>
+{{template "table_container" .}}
+
+{{define "table_container"}}
+<div id="table-container">
+    <table>
+        {{template "table_head" .}}
+        {{template "table_body_wrapper" .}}
+    </table>
+</div>
+{{end}}
+
+{{define "table_head"}}
+<thead>
+<tr>
+    {{range .}}
+        <th>{{.Label}}{{if .Unit}} ({{.Unit}}){{end}}</th>
+    {{end}}
+</tr>
+</thead>
+{{end}}
+
+{{define "table_body_wrapper"}}
+<tbody id="table-body"
+    hx-post="/table/add-row"
+    hx-trigger="keyup[key=='Enter'] from:input"
+    hx-include="tr:last-child"
+    hx-target="#table-body"
+    hx-swap="outerHTML"
+    hx-on="
+        htmx:beforeRequest:
+            const row = this.lastElementChild;
+            const inputs = row.querySelectorAll('input');
+            const isFull = Array.from(inputs).every(i => i.value.trim() !== '');
+            if (!isFull) {
+                event.preventDefault();
+            }
+    "
+>
+    {{template "table_body" .}}
+</tbody>
+{{end}}
+
+{{define "table_body"}}
+{{if .}}
+    {{$columns := .}}
+    {{if gt (len $columns) 0}}
+        {{$firstColumn := index $columns 0}}
+        {{$rowCount := len $firstColumn.Cells}}
+        {{range $rowIndex := untilCount $rowCount}}
+            <tr>
+                {{range $columns}}
+                    {{if lt $rowIndex (len .Cells)}}
+                        {{$cell := index .Cells $rowIndex}}
+                        <td>
+                            <input
+                                name="{{$cell.Name}}"
+                                value="{{$cell.Value}}"
+                                hx-post="/table/save"
+                                hx-trigger="keyup changed delay:500ms"
+                                hx-vals='{"name":"{{$cell.Name}}"}'
+                                hx-include="this"
+                                hx-swap="none"
+                            >
+                        </td>
+                    {{end}}
+                {{end}}
+            </tr>
+        {{end}}
+    {{end}}
+{{end}}
+{{end}}
+
+</body>
+</html>
