@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var RedirectTO string = "/table/test"
+var RedirectTO string = "/table"
 
 var Template = template.Must(
 	template.New("table.html").Funcs(template.FuncMap{
@@ -57,7 +57,7 @@ func RowCount() int {
 	return len(table[0].Cells)
 }
 
-func TestHandler(w http.ResponseWriter, r *http.Request) {
+func GenericTableHandler(w http.ResponseWriter, r *http.Request) {
 	Template.Execute(w, table)
 }
 

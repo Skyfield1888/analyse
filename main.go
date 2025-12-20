@@ -15,7 +15,7 @@ func main() {
 	http.HandleFunc("/table/save", backend.SavingHandler)
 	http.HandleFunc("/table/new", backend.NewTableHandler)
 	//only for table testing without entire ui
-	http.HandleFunc("/table/test", backend.TestHandler)
+	http.HandleFunc("/table", backend.GenericTableHandler)
 
 	http.ListenAndServe(":8081", nil)
 }
