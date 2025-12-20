@@ -14,8 +14,8 @@ func main() {
 	http.HandleFunc("/table/set-label", backend.RenameColumnHandler)
 	http.HandleFunc("/table/save", backend.SavingHandler)
 	http.HandleFunc("/table/new", backend.NewTableHandler)
-	//only for table testing without entire ui
-	http.HandleFunc("/table", backend.GenericTableHandler)
+	//use table testing without entire ui
+	http.HandleFunc("/table/generate", backend.GenericTableHandler)
 
 	http.ListenAndServe(":8081", nil)
 }

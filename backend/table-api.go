@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var RedirectTO string = "/table"
+var RedirectTO string = "/table/generate"
 
 var Template = template.Must(
 	template.New("table.html").Funcs(template.FuncMap{
